@@ -21,6 +21,7 @@ void find_extrema(const float* v, std::size_t n,
   if(p.RunPersistence(vv)){
     std::vector<int> min_v, max_v;
     p.GetExtremaIndices(min_v, max_v, threshold, true);
+    min_v.push_back(p.GetGlobalMinimumIndex(true));
     *nmin = min_v.size();
     *nmax = max_v.size();
     *minIndices = new int[*nmin];
