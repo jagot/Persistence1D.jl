@@ -1,0 +1,10 @@
+#+TITLE: Persistence1D.jl
+
+* Installation
+  #+BEGIN_SRC julia
+    Pkg.clone("https://github.com/jagot/Persistence1D.jl.git")
+    Pkg.build("Persistence1D")
+  #+END_SRC
+
+* Example usage
+  [[example.ipynb]]
