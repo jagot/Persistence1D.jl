@@ -5,3 +5,4 @@
 deps/builds/
 /deps/deps.jl
 deps/usr/
+.ipynb_checkpoints/
