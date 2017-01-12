@@ -23,8 +23,8 @@ function find_extrema(v::Array{Float32}, threshold = 0)
 
     nmin = convert(Int64,nmin[])
     nmax = convert(Int64,nmax[])
-    min_v = pointer_to_array(min_p[], nmin, true)
-    max_v = pointer_to_array(max_p[], nmax, true)
+    min_v = unsafe_wrap(Array,min_p[], nmin, true)
+    max_v = unsafe_wrap(Array,max_p[], nmax, true)
 
     min_v, max_v
 end
