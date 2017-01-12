@@ -29,4 +29,9 @@ function find_extrema(v::Array{Float32}, threshold = 0)
     min_v, max_v
 end
 
+find_extrema{T<:Real}(v::Array{T}, treshold = 0) =
+    find_extrema(convert(Array{Float32}, v), treshold)
+
+export find_extrema
+
 end
