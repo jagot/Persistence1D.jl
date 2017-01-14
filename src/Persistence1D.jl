@@ -2,11 +2,18 @@ module Persistence1D
 
 include("../deps/deps.jl")
 
+type Persistence
+    data::Vector{Real}
+    minima::Vector{Int}
+    maxima::Vector{Int}
+    gminindex::Int
+    gminvalue::Real
+    persistence::Vector{Real}
+end
+
 function find_persistence(v::Array{Float32},
                           threshold = 0,
                           persistence = true)
-    v = convert(Array{Float32}, v)
-
     min_p = Ref{Ptr{Cint}}(0)
     max_p = Ref{Ptr{Cint}}(0)
     nmin = Ref{Csize_t}(0)
@@ -36,10 +43,10 @@ function find_persistence(v::Array{Float32},
 
     gminindex,gminvalue = convert(Int32,gminindex[]),convert(Float32,gminvalue[])
 
-    persistence || return [min_v;gminindex], max_v
+    persistence || return [min_v;gminindex],max_v
     npers = convert(Int64,npers[])
     pers_v = unsafe_wrap(Array,pers_p[], npers, true)
-    min_v,max_v,gminindex,gminvalue,pers_v
+    Persistence(v, min_v, max_v, gminindex, gminvalue, pers_v)
 end
 
 find_persistence{T<:Real}(v::Array{T}, threshold = 0, persistence = true) =
@@ -48,6 +55,17 @@ find_persistence{T<:Real}(v::Array{T}, threshold = 0, persistence = true) =
 find_extrema{T<:Real}(v::Array{T}, threshold = 0) =
     find_persistence(v, threshold, false)
 
-export find_persistence, find_extrema
+import Base.filter
+function filter(p::Persistence, threshold::Real)
+    pis = find(p.persistence .> threshold)
+    Persistence(p.data,
+                p.minima[pis],
+                p.maxima[pis],
+                p.gminindex,
+                p.gminvalue,
+                p.persistence[pis])
+end
+
+export find_persistence, find_extrema, filter
 
 end
