@@ -11,7 +11,7 @@ function find_persistence(v::Array{Float32},
     max_p = Ref{Ptr{Cint}}(0)
     nmin = Ref{Csize_t}(0)
     nmax = Ref{Csize_t}(0)
-    gminvalue = Ref{Cfloat}(0)
+    gminindex,gminvalue = Ref{Cint}(0),Ref{Cfloat}(0)
     pers_p,npers = persistence ? (Ref{Ptr{Cfloat}}(0),Ref{Csize_t}(1)) : (C_NULL,Ref{Csize_t}(0))
 
     ccall((:find_extrema, _jl_libpersistence1d),
@@ -19,13 +19,13 @@ function find_persistence(v::Array{Float32},
           (Ptr{Cfloat}, Csize_t,
            Ref{Ptr{Cint}}, Ref{Csize_t},
            Ref{Ptr{Cint}}, Ref{Csize_t},
-           Ref{Cfloat},
+           Ref{Cint}, Ref{Cfloat},
            Ref{Ptr{Cfloat}}, Ref{Csize_t},
            Cfloat),
           v, length(v),
           min_p, nmin,
           max_p, nmax,
-          gminvalue,
+          gminindex, gminvalue,
           pers_p, npers,
           threshold)
 
@@ -34,10 +34,12 @@ function find_persistence(v::Array{Float32},
     min_v = unsafe_wrap(Array,min_p[], nmin, true)
     max_v = unsafe_wrap(Array,max_p[], nmax, true)
 
-    persistence || return min_v, max_v
+    gminindex,gminvalue = convert(Int32,gminindex[]),convert(Float32,gminvalue[])
+
+    persistence || return [min_v;gminindex], max_v
     npers = convert(Int64,npers[])
     pers_v = unsafe_wrap(Array,pers_p[], npers, true)
-    min_v,max_v,convert(Float32,gminvalue[]),pers_v
+    min_v,max_v,gminindex,gminvalue,pers_v
 end
 
 find_persistence{T<:Real}(v::Array{T}, threshold = 0, persistence = true) =
