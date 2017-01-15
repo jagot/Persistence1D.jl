@@ -1,4 +1,6 @@
 #+TITLE: Persistence1D.jl
+Julia interface to the extrema finding algorithm [[https://github.com/yeara/Persistence1D.git][Persistence1D]] (public
+domain).
 
 * Installation
   #+BEGIN_SRC julia
@@ -6,5 +8,13 @@
     Pkg.build("Persistence1D")
   #+END_SRC
 
-* Example usage
-  [[example.ipynb]]
+* Examples
+  Find persistent extrema:
+
+  [[examples/extrema.png]]
+
+  Reconstruct smooth function with persistent features preserved:
+
+  [[examples/reconstruct.png]]
+
+  [[examples/example.ipynb][Example usage]]
