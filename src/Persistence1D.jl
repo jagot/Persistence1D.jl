@@ -68,4 +68,6 @@ end
 
 export find_persistence, find_extrema, filter
 
+include("reconstruct.jl")
+
 end
