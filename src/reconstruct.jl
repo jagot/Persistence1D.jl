@@ -132,8 +132,8 @@ function quadprog(H,f,A,b,Aeq,beq)
     getvalue(x)
 end
 
-function reconstruct_persistent{T<:Real}(data::Vector{T}, threshold::Real,
-                                         smoothness::Integer = 2, weight = 1e-6)
+function reconstruct_persistent(data::Vector{T}, threshold::Real,
+                                smoothness::Integer = 2, weight = 1e-6) where {T<:Real}
     smoothness > 0 || error("Invalid smoothness requested: $(smoothness)")
     0 <= weight && weight <= 1 || error("Weight $(weight) not in the interval [0,1]")
 

@@ -1,0 +1,8 @@
+authors = ["Stefanos Carlström <stefanos.carlstrom@gmail.com>"]
+name = "Persistence1D"
+uuid = "188dff36-cb14-11e8-3b13-a1aa54be1065"
+version = "0.1.0"
+
+[deps]
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
