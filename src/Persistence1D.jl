@@ -2,13 +2,13 @@ module Persistence1D
 
 include("../deps/deps.jl")
 
-struct Persistence
-    data::Vector{Real}
+struct Persistence{T}
+    data::Vector{T}
     minima::Vector{Int}
     maxima::Vector{Int}
     gminindex::Int
-    gminvalue::Real
-    persistence::Vector{Real}
+    gminvalue::T
+    persistence::Vector{T}
 end
 
 function find_persistence(v::Array{Float32},
