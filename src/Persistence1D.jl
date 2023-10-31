@@ -2,11 +2,11 @@ module Persistence1D
 
 include("../deps/deps.jl")
 
-struct Persistence{T}
+struct Persistence{T,I<:Integer}
     data::Vector{T}
-    minima::Vector{Int}
-    maxima::Vector{Int}
-    gminindex::Int
+    minima::Vector{I}
+    maxima::Vector{I}
+    gminindex::I
     gminvalue::T
     persistence::Vector{T}
 end
